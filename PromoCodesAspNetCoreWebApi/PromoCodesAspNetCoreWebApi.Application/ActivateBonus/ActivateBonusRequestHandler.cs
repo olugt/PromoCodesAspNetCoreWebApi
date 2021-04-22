@@ -21,21 +21,27 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus
         private readonly ICurrentUser currentUser;
         private readonly IRepository<Bonus> bonusRepo;
         private readonly IRepository<User> userRepo;
+        private readonly IRepository<PromoCode> promoCodeRepo;
 
         public ActivateBonusRequestHandler(
             IMapper mapper,
             ICurrentUser currentUser,
             IRepository<Bonus> bonusRepo,
-            IRepository<User> userRepo)
+            IRepository<User> userRepo,
+            IRepository<PromoCode> promoCodeRepo)
         {
             this.mapper = mapper;
             this.currentUser = currentUser;
             this.bonusRepo = bonusRepo;
             this.userRepo = userRepo;
+            this.promoCodeRepo = promoCodeRepo;
         }
 
         public async Task<ActivateBonusResponse> Handle(ActivateBonusRequest request, CancellationToken cancellationToken)
         {
+            if (!string.IsNullOrEmpty(request.BinderModel.PromoCode) && !promoCodeRepo.Query().Any(a => a.Name == request.BinderModel.PromoCode))
+                throw new NotFoundException("Promo code not found!");
+
             var user = UserLogic.GetUserByEmailAddress(currentUser.GetEmailAddress(), userRepo);
 
             var serviceId = request.BinderModel.ServiceId;
@@ -49,6 +55,7 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus
                 throw new InvalidOperationException("Bonus already activated for the user.");
 
             bonus.IsActivated = true;
+            bonus.PromoCodeId = promoCodeRepo.Query().SingleOrDefault(a => a.Name == request.BinderModel.PromoCode)?.PromoCodeId;
             if (await bonusRepo.UpdateAsync(bonus, cancellationToken) != 1)
                 throw new NotFoundException("Bonus data could not be found.");
 

@@ -12,7 +12,7 @@ namespace PromoCodesAspNetCoreWebApi.Domain.Entities
         public User User { get; set; }
         public int ServiceId { get; set; }
         public Service Service { get; set; }
-        public int PromoCodeId { get; set; }
+        public int? PromoCodeId { get; set; }
         public PromoCode PromoCode { get; set; }
         public bool? IsActivated { get; set; }
     }

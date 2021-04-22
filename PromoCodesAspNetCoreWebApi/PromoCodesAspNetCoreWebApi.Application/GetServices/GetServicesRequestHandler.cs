@@ -33,7 +33,8 @@ namespace PromoCodesAspNetCoreWebApi.Application.GetServices
             if (!services.Any())
                 throw new NotFoundException("No services available.");
 
-            return Task.FromResult(new GetServicesResponse { Services = mapper.ProjectTo<ServiceModel>(services).ToList() });
+            var bla = mapper.ProjectTo<ServiceModel>(services).ToList();
+            return Task.FromResult(new GetServicesResponse { Services = bla });
         }
     }
 }

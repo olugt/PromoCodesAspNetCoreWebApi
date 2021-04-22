@@ -31,7 +31,7 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.ConfigurationManagement
 
         public SecurityKey GetSecurityKey()
         {
-            return new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetJwtDetailOptions().SecurityKey)); ;
+            return new SymmetricSecurityKey(Convert.FromBase64String(GetJwtDetailOptions().SecurityKey)); ;
         }
 
         public IEnumerable<SecurityKey> IssuerSigningKeyResolver(string token, SecurityToken securityToken, string kid, TokenValidationParameters validationParameters)

@@ -28,6 +28,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromoCodesAspNetCoreWebApi.ApplicationTests", "PromoCodesAspNetCoreWebApi.ApplicationTests\PromoCodesAspNetCoreWebApi.ApplicationTests.csproj", "{4720674B-3551-4206-8326-42AD6501F7D5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8D52E055-0DF7-4805-B698-D6A6F3001093}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +62,10 @@ Global
 		{190CC8D5-4D6C-467E-97E2-3A9803E031C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{190CC8D5-4D6C-467E-97E2-3A9803E031C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{190CC8D5-4D6C-467E-97E2-3A9803E031C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4720674B-3551-4206-8326-42AD6501F7D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4720674B-3551-4206-8326-42AD6501F7D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4720674B-3551-4206-8326-42AD6501F7D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4720674B-3551-4206-8326-42AD6501F7D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +80,7 @@ Global
 		{219FF05F-5954-4F0A-85BF-61E2A32360A6} = {E790660F-0ACD-4494-B791-4A276520B8D6}
 		{126C3BCC-0C63-4CBF-8C16-6F8C566F6721} = {E790660F-0ACD-4494-B791-4A276520B8D6}
 		{190CC8D5-4D6C-467E-97E2-3A9803E031C9} = {04C3D7F7-C97A-4342-A1B2-E67CDC3561CC}
+		{4720674B-3551-4206-8326-42AD6501F7D5} = {8D52E055-0DF7-4805-B698-D6A6F3001093}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A5614C76-381B-41CD-A661-43720E138248}

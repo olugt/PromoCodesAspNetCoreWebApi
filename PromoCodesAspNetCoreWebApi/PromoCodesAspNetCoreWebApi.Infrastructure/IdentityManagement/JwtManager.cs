@@ -27,7 +27,7 @@ namespace PromoCodesAspNetCoreWebApi.Infrastructure.IdentityManagement
             // This adds claims to represent account for multiple audiences. It is expected that the consumer of the JWT should check the audience.
             var jwtClaims = claims.Concat(jwtDetailOptions.Audiences.Select(a => new Claim(StandardClaimTypeConstants.Aud, a)));
 
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtDetailOptions.SecurityKey));
+            var securityKey = new SymmetricSecurityKey(Convert.FromBase64String(jwtDetailOptions.SecurityKey));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
 

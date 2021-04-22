@@ -7,5 +7,6 @@ namespace PromoCodesAspNetCoreWebApi.Application.Common.Models
     public class ActivateBonusBinderModel
     {
         public int ServiceId { get; set; }
+        public string PromoCode { get; set; }
     }
 }

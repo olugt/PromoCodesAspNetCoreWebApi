@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using PromoCodesAspNetCoreWebApi.Persistence;
+using PromoCodesAspNetCoreWebApi.Persistence.PromoCodesAspNetCoreWebApiDb;
 using Serilog;
 using Serilog.Events;
 using System;
@@ -32,7 +33,11 @@ namespace PromoCodesAspNetCoreWebApi.WebApi
             try
             {
                 Log.Information("Starting web host...");
-                CreateHostBuilder(args).Build().Run();
+                var host = CreateHostBuilder(args).Build();
+
+                DatabaseLogic.Refresh<PromoCodesAspNetCoreWebApiDbContext>(host.Services);
+
+                host.Run();
                 return 0;
             }
             catch (Exception ex)
