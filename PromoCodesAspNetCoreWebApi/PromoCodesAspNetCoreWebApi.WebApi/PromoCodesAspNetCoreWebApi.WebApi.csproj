@@ -11,4 +11,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PromoCodesAspNetCoreWebApi.Common\PromoCodesAspNetCoreWebApi.Common.csproj" />
+    <ProjectReference Include="..\PromoCodesAspNetCoreWebApi.Infrastructure\PromoCodesAspNetCoreWebApi.Infrastructure.csproj" />
+    <ProjectReference Include="..\PromoCodesAspNetCoreWebApi.Persistence\PromoCodesAspNetCoreWebApi.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>
