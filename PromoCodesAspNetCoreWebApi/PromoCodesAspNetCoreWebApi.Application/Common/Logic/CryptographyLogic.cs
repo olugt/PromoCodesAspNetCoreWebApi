@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PromoCodesAspNetCoreWebApi.Application.Common.Logic
 {
-    public class CryptographyLogic
+    public static class CryptographyLogic
     {
         public static string HashStringToSha256ToBase64(string theString)
         {

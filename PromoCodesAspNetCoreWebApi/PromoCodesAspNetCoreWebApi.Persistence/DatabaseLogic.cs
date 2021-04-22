@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PromoCodesAspNetCoreWebApi.Persistence
 {
-    public class DatabaseLogic
+    public static class DatabaseLogic
     {
         public static void Initialize<TDbContext>(IServiceProvider serviceProvider) where TDbContext : DbContext
         {

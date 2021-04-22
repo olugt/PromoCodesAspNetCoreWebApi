@@ -7,7 +7,7 @@ using System.Text;
 
 namespace PromoCodesAspNetCoreWebApi.Application.Common.Logic
 {
-    public class UserLogic
+    public static class UserLogic
     {
         public static User GetUserByEmailAddress(string emailAddress, IRepository<User> userRepo)
         {
