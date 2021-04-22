@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PromoCodesAspNetCoreWebApi.WebApi</name>
+    </assembly>
+    <members>
+        <member name="T:PromoCodesAspNetCoreWebApi.WebApi.ConfigurationManagement.ConfigureJwtDetailOptions">
+            <summary>
+            Configure options for JWT details.
+            </summary>
+        </member>
+        <member name="T:PromoCodesAspNetCoreWebApi.WebApi.ConfigurationManagement.ConfigureSwaggerGenOptions">
+            <summary>
+            Configure options for Swagger.
+            </summary>
+        </member>
+        <member name="T:PromoCodesAspNetCoreWebApi.WebApi.ResponseProviders.ApiVersionExceptionResponseProvider">
+            <summary>
+            This class is essentially to throw exception for HTTP status code that are not OK. A centralized exception wrapper is expected to wrap the raised exception.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -12,6 +12,6 @@ namespace PromoCodesAspNetCoreWebApi.Application.SearchService
         /// Snippet of service name.
         /// </summary>
         public string ServiceNameSnippet { get; set; }
-        public PaginationModel Pagination { get; set; }
+        public PaginationBinderModel Pagination { get; set; }
     }
 }

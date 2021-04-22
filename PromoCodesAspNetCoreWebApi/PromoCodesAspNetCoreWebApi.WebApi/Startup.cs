@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,21 +16,29 @@ using PromoCodesAspNetCoreWebApi.Application.Common.Models.Infrastructure;
 using PromoCodesAspNetCoreWebApi.Infrastructure;
 using PromoCodesAspNetCoreWebApi.Persistence;
 using PromoCodesAspNetCoreWebApi.WebApi.ConfigurationManagement;
+using PromoCodesAspNetCoreWebApi.WebApi.ResponseProviders;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace PromoCodesAspNetCoreWebApi.WebApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(
+            IConfiguration configuration,
+            IHostEnvironment hostEnvironment)
         {
             Configuration = configuration;
+            HostEnvironment = hostEnvironment;
         }
 
         public IConfiguration Configuration { get; }
+        public IHostEnvironment HostEnvironment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -41,7 +50,19 @@ namespace PromoCodesAspNetCoreWebApi.WebApi
             services.AddPersistence(Configuration);
             services.AddApplication(Configuration);
 
-            services.AddControllers();
+            services.AddControllers()
+                .ConfigureApiBehaviorOptions(options =>
+                {
+                    options.SuppressModelStateInvalidFilter = true;
+                });
+            services.AddApiVersioning(apiVersioningOptions =>
+            {
+                apiVersioningOptions.ReportApiVersions = true;
+                apiVersioningOptions.ErrorResponses = new ApiVersionExceptionResponseProvider();
+            });
+            services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
+
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerGenOptions>();
 
             services.AddOptions<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme)
                 .Configure<JwtDetailConfigurationManager>((options, jwtConfigurationManager) =>
@@ -67,20 +88,49 @@ namespace PromoCodesAspNetCoreWebApi.WebApi
 
             services.AddAuthorization();
 
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PromoCodesAspNetCoreWebApi.WebApi", Version = "v1" });
+                options.ResolveConflictingActions(apiDescription => apiDescription.First());
+                options.IncludeXmlComments(
+                    Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"),
+                    includeControllerXmlComments: true
+                    );
+
+                options.AddSecurityDefinition("JWT_Bearer_Token_Authentication", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Bearer token Open API security scheme."
+                });
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "JWT_Bearer_Token_Authentication"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(
+            IApplicationBuilder app,
+            IWebHostEnvironment env,
+            IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PromoCodesAspNetCoreWebApi.WebApi v1"));
             }
 
             app.UseHttpsRedirection();
@@ -89,6 +139,18 @@ namespace PromoCodesAspNetCoreWebApi.WebApi
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(
+                options =>
+                {
+                    foreach (var description in provider.ApiVersionDescriptions)
+                    {
+                        options.SwaggerEndpoint(
+                            $"/swagger/{description.GroupName}/swagger.json",
+                            description.GroupName.ToUpperInvariant());
+                    }
+                });
 
             app.UseEndpoints(endpoints =>
             {

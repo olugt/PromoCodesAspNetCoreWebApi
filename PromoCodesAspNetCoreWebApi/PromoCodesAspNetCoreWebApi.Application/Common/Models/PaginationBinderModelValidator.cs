@@ -5,9 +5,9 @@ using System.Text;
 
 namespace PromoCodesAspNetCoreWebApi.Application.Common.Models
 {
-    public class PaginationModelValidator: AbstractValidator<PaginationModel>
+    public class PaginationBinderModelValidator: AbstractValidator<PaginationBinderModel>
     {
-        public PaginationModelValidator()
+        public PaginationBinderModelValidator()
         {
             RuleFor(a => a.Page)
                 .NotEmpty()

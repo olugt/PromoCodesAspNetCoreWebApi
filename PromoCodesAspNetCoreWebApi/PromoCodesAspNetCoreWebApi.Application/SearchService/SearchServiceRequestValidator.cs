@@ -15,7 +15,7 @@ namespace PromoCodesAspNetCoreWebApi.Application.SearchService
                 .WithMessage("Service name snippet cannot be empty.");
 
             RuleFor(a => a.Pagination)
-                .SetValidator(new PaginationModelValidator())
+                .SetValidator(new PaginationBinderModelValidator())
                 .When(a => a.Pagination != null);
         }
     }

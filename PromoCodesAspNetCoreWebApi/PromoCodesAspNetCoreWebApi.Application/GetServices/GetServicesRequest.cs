@@ -8,6 +8,6 @@ namespace PromoCodesAspNetCoreWebApi.Application.GetServices
 {
     public class GetServicesRequest: IRequest<GetServicesResponse>
     {
-        public PaginationModel Pagination { get; set; }
+        public PaginationBinderModel Pagination { get; set; }
     }
 }

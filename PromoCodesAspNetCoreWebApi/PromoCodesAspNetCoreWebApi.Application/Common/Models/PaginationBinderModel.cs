@@ -7,7 +7,7 @@ namespace PromoCodesAspNetCoreWebApi.Application.Common.Models
     /// <summary>
     /// Pagination information.
     /// </summary>
-    public class PaginationModel
+    public class PaginationBinderModel
     {
         /// <summary>
         /// The page number.
