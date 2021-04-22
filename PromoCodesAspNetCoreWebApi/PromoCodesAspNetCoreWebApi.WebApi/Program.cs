@@ -35,7 +35,7 @@ namespace PromoCodesAspNetCoreWebApi.WebApi
                 Log.Information("Starting web host...");
                 var host = CreateHostBuilder(args).Build();
 
-                DatabaseLogic.Refresh<PromoCodesAspNetCoreWebApiDbContext>(host.Services);
+                DatabaseLogic.Initialize<PromoCodesAspNetCoreWebApiDbContext>(host.Services);
 
                 host.Run();
                 return 0;

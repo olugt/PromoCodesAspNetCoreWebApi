@@ -8,7 +8,7 @@ namespace PromoCodesAspNetCoreWebApi.Persistence
 {
     public class DatabaseLogic
     {
-        public static void Refresh<TDbContext>(IServiceProvider serviceProvider) where TDbContext : DbContext
+        public static void Initialize<TDbContext>(IServiceProvider serviceProvider) where TDbContext : DbContext
         {
             using (var scope = serviceProvider.CreateScope())
             {
