@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace PromoCodesAspNetCoreWebApi.WebApi.Controllers
 {
+    [Authorize]
     [ApiVersion("1.0")]
     [Route("api/[controller]")]
     [ApiController]

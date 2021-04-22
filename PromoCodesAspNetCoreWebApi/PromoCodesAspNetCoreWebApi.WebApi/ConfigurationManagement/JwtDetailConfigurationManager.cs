@@ -5,6 +5,7 @@ using PromoCodesAspNetCoreWebApi.Application.Common.Models.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace PromoCodesAspNetCoreWebApi.WebApi.ConfigurationManagement
@@ -30,7 +31,7 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.ConfigurationManagement
 
         public SecurityKey GetSecurityKey()
         {
-            return new SymmetricSecurityKey(Convert.FromBase64String(GetJwtDetailOptions().SymmetricSecurityKeyBase64)); ;
+            return new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetJwtDetailOptions().SecurityKey)); ;
         }
 
         public IEnumerable<SecurityKey> IssuerSigningKeyResolver(string token, SecurityToken securityToken, string kid, TokenValidationParameters validationParameters)
