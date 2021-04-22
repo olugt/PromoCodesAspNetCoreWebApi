@@ -38,6 +38,13 @@
             <param name="binderModel">Information about the service.</param>
             <returns>The service about which bonus was activated for the user.</returns>
         </member>
+        <member name="M:PromoCodesAspNetCoreWebApi.WebApi.Controllers.UserController.Login(PromoCodesAspNetCoreWebApi.Application.Common.Models.LoginBinderModel)">
+            <summary>
+            Logs in a user with the email address and password provided.
+            </summary>
+            <param name="binderModel">User credentials.</param>
+            <returns>Returns the JWT detail generated for the suer.</returns>
+        </member>
         <member name="T:PromoCodesAspNetCoreWebApi.WebApi.ResponseProviders.ApiVersionExceptionResponseProvider">
             <summary>
             This class is essentially to throw exception for HTTP status code that are not OK. A centralized exception wrapper is expected to wrap the raised exception.

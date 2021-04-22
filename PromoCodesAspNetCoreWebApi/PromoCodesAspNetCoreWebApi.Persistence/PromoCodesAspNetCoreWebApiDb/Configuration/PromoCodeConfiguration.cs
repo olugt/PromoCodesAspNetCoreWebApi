@@ -7,11 +7,11 @@ using System.Text;
 
 namespace PromoCodesAspNetCoreWebApi.Persistence.PromoCodesAspNetCoreWebApiDb.Configuration
 {
-    public class BonusConfiguration : IEntityTypeConfiguration<Bonus>
+    public class PromoCodeConfiguration : IEntityTypeConfiguration<PromoCode>
     {
-        public void Configure(EntityTypeBuilder<Bonus> builder)
+        public void Configure(EntityTypeBuilder<PromoCode> builder)
         {
-            builder.ToTable(nameof(Bonus)).HasIndex(a => new { a.UserId, a.ServiceId }).IsUnique();
+            builder.ToTable(nameof(PromoCode)).HasIndex(a => a.Name).IsUnique();
         }
     }
 }

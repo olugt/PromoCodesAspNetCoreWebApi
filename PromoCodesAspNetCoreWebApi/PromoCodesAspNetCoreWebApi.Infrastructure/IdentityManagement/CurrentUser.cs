@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
+using PromoCodesAspNetCoreWebApi.Application.Common.Constants;
 using PromoCodesAspNetCoreWebApi.Application.Common.Interfaces.Infrastructure;
-using PromoCodesAspNetCoreWebApi.Infrastructure.IdentityManagement.Constants;
+using PromoCodesAspNetCoreWebApi.Common.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,9 +22,9 @@ namespace PromoCodesAspNetCoreWebApi.Infrastructure.IdentityManagement
         {
             if (httpContextAccessor.HttpContext.User != null)
             {
-                return httpContextAccessor.HttpContext.User.FindFirst(CustomClaimTypesConstants.EmailAddress).Value;
+                return httpContextAccessor.HttpContext.User.FindFirst(CustomClaimTypeConstants.EmailAddress).Value;
             }
-            return null;
+            throw new IdentityException("User login is invalid!");
         }
     }
 }
