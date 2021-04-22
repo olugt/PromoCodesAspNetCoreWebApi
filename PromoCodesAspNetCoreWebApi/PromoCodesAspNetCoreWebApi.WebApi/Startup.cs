@@ -47,6 +47,8 @@ namespace PromoCodesAspNetCoreWebApi.WebApi
             services.AddTransient<IConfigureOptions<JwtDetailOptions>, ConfigureJwtDetailOptions>();
             services.AddTransient<JwtDetailConfigurationManager>();
 
+            services.AddHttpContextAccessor();
+
             services.AddInfrastructure(Configuration);
             services.AddPersistence(Configuration);
             services.AddApplication(Configuration);

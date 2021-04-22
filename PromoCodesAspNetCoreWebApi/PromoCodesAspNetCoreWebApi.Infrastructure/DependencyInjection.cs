@@ -13,6 +13,7 @@ namespace PromoCodesAspNetCoreWebApi.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<IJwtManager, JwtManager>();
+            services.AddTransient<ICurrentUser, CurrentUser>();
 
             return services;
         }
