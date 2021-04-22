@@ -11,7 +11,7 @@ namespace PromoCodesAspNetCoreWebApi.Application.GetServices
         public GetServicesRequestValidator()
         {
             RuleFor(a => a.Pagination)
-                .SetValidator(new PaginationBinderModelValidator())
+                .SetValidator(new PaginationModelValidator())
                 .When(a => a.Pagination != null);
         }
     }

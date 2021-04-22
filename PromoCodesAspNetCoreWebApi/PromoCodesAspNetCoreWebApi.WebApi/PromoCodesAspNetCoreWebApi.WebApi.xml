@@ -14,6 +14,30 @@
             Configure options for Swagger.
             </summary>
         </member>
+        <member name="M:PromoCodesAspNetCoreWebApi.WebApi.Controllers.ServicesController.Search(System.String,System.Int32,System.Int32)">
+            <summary>
+            Search for a service with a service name snippet.
+            </summary>
+            <param name="nameSnippet">Snippet or whole of service name.</param>
+            <param name="page">Page number.</param>
+            <param name="limit">Page items limit.</param>
+            <returns>List of matched services.</returns>
+        </member>
+        <member name="M:PromoCodesAspNetCoreWebApi.WebApi.Controllers.ServicesController.Get(System.Int32,System.Int32)">
+            <summary>
+            Get list of services, and can be paged.
+            </summary>
+            <param name="page">Page number.</param>
+            <param name="limit">Page items limit.</param>
+            <returns>List of services, as determined by pagination.</returns>
+        </member>
+        <member name="M:PromoCodesAspNetCoreWebApi.WebApi.Controllers.ServicesController.ActivateBonus(PromoCodesAspNetCoreWebApi.Application.Common.Models.ActivateBonusBinderModel)">
+            <summary>
+            Activate bonus for the identified service, for the current user.
+            </summary>
+            <param name="binderModel">Information about the service.</param>
+            <returns>The service about which bonus was activated for the user.</returns>
+        </member>
         <member name="T:PromoCodesAspNetCoreWebApi.WebApi.ResponseProviders.ApiVersionExceptionResponseProvider">
             <summary>
             This class is essentially to throw exception for HTTP status code that are not OK. A centralized exception wrapper is expected to wrap the raised exception.

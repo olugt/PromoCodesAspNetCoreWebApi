@@ -23,6 +23,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromoCodesAspNetCoreWebApi.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromoCodesAspNetCoreWebApi.WebApi", "PromoCodesAspNetCoreWebApi.WebApi\PromoCodesAspNetCoreWebApi.WebApi.csproj", "{190CC8D5-4D6C-467E-97E2-3A9803E031C9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C4F702FA-FB01-4A90-9701-9D86FA796811}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

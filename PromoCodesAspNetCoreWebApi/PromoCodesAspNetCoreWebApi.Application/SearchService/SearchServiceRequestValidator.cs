@@ -10,13 +10,13 @@ namespace PromoCodesAspNetCoreWebApi.Application.SearchService
     {
         public SearchServiceRequestValidator()
         {
-            RuleFor(a => a.BinderModel.ServiceNameSnippet)
+            RuleFor(a => a.ServiceNameSnippet)
                 .NotEmpty()
                 .WithMessage("Service name snippet cannot be empty.");
 
-            RuleFor(a => a.BinderModel.Pagination)
-                .SetValidator(new PaginationBinderModelValidator())
-                .When(a => a.BinderModel.Pagination != null);
+            RuleFor(a => a.Pagination)
+                .SetValidator(new PaginationModelValidator())
+                .When(a => a.Pagination != null);
         }
     }
 }
