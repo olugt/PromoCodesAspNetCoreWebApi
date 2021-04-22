@@ -4,6 +4,9 @@ using System.Text;
 
 namespace PromoCodesAspNetCoreWebApi.Application.Common.Interfaces
 {
+    /// <summary>
+    /// Current user.
+    /// </summary>
     public interface ICurrentUser
     {
         public string EmailAddress { get; set; }

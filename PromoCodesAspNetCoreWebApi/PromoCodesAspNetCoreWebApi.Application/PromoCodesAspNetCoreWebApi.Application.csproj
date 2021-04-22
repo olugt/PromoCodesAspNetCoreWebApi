@@ -21,8 +21,4 @@
     <ProjectReference Include="..\PromoCodesAspNetCoreWebApi.Domain\PromoCodesAspNetCoreWebApi.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Common\Interfaces\Infrastructure\" />
-  </ItemGroup>
-
 </Project>
