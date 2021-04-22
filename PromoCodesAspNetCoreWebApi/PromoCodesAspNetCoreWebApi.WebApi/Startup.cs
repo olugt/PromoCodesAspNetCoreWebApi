@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,10 +7,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PromoCodesAspNetCoreWebApi.Application;
+using PromoCodesAspNetCoreWebApi.Application.Common.Models.Infrastructure;
 using PromoCodesAspNetCoreWebApi.Infrastructure;
 using PromoCodesAspNetCoreWebApi.Persistence;
+using PromoCodesAspNetCoreWebApi.WebApi.ConfigurationManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,11 +34,39 @@ namespace PromoCodesAspNetCoreWebApi.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IConfigureOptions<JwtDetailOptions>, ConfigureJwtDetailOptions>();
+            services.AddTransient<JwtDetailConfigurationManager>();
+
             services.AddInfrastructure(Configuration);
             services.AddPersistence(Configuration);
             services.AddApplication(Configuration);
 
             services.AddControllers();
+
+            services.AddOptions<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme)
+                .Configure<JwtDetailConfigurationManager>((options, jwtConfigurationManager) =>
+                {
+                    var jwtManagementOptions = jwtConfigurationManager.GetJwtDetailOptions();
+
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        RequireExpirationTime = true,
+                        RequireSignedTokens = true,
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = jwtManagementOptions.Issuer,
+                        ValidAudiences = jwtManagementOptions.Audiences,
+                        IssuerSigningKey = jwtConfigurationManager.GetSecurityKey(),
+                        IssuerSigningKeyResolver = new IssuerSigningKeyResolver(jwtConfigurationManager.IssuerSigningKeyResolver)
+                    };
+                });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
+
+            services.AddAuthorization();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PromoCodesAspNetCoreWebApi.WebApi", Version = "v1" });
@@ -54,6 +87,7 @@ namespace PromoCodesAspNetCoreWebApi.WebApi
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

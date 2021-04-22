@@ -15,29 +15,29 @@ namespace PromoCodesAspNetCoreWebApi.Infrastructure.IdentityManagement
 {
     public class JwtManager : IJwtManager
     {
-        private JwtOptions jwtOptions;
+        private JwtDetailOptions jwtDetailOptions;
 
         public JwtManager(
-            IOptionsMonitor<JwtOptions> jwtOptionsMonitor)
+            IOptionsMonitor<JwtDetailOptions> jwtDetailOptionsMonitor)
         {
-            jwtOptions = jwtOptionsMonitor.CurrentValue;
+            jwtDetailOptions = jwtDetailOptionsMonitor.CurrentValue;
         }
         public Task<JwtDetail> GenerateJwtDetails(IEnumerable<Claim> claims)
         {
             // This adds claims to represent account for multiple audiences. It is expected that the consumer of the JWT should check the audience.
-            var jwtClaims = claims.Concat(jwtOptions.Audiences.Select(a => new Claim(StandardClaimTypesConstants.Aud, a)));
+            var jwtClaims = claims.Concat(jwtDetailOptions.Audiences.Select(a => new Claim(StandardClaimTypesConstants.Aud, a)));
 
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.SymmetricSecurityKey));
+            var securityKey = new SymmetricSecurityKey(Convert.FromBase64String(jwtDetailOptions.SymmetricSecurityKeyBase64));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
 
-            var expiryDatetimeUtc = DateTime.UtcNow.AddMinutes(jwtOptions.ExpiryDurationMinutes);
+            var expiryDatetimeUtc = DateTime.UtcNow.AddMinutes(jwtDetailOptions.ExpiryDurationMinutes);
 
             var jwtSecurityToken = new JwtSecurityToken(
-                issuer: jwtOptions.Issuer,
+                issuer: jwtDetailOptions.Issuer,
                 audience: null,
                 claims: jwtClaims,
-                notBefore: expiryDatetimeUtc.AddMinutes(-jwtOptions.ExpiryDurationMinutes),
+                notBefore: expiryDatetimeUtc.AddMinutes(-jwtDetailOptions.ExpiryDurationMinutes),
                 expires: expiryDatetimeUtc,
                 signingCredentials: signingCredentials
                 );

@@ -10,9 +10,9 @@ namespace PromoCodesAspNetCoreWebApi.Application.Common.Interfaces.Infrastructur
     public interface IJwtManager
     {
         /// <summary>
-        /// Generate JWT with other related details.
+        /// Generate JWT with other related details in claims.
         /// </summary>
-        /// <param name="claims">Claims to embed in the JWT.</param>
+        /// <param name="claims">The claims to embed in the JWT.</param>
         /// <returns>JWT details.</returns>
         Task<JwtDetail> GenerateJwtDetails(IEnumerable<Claim> claims);
     }
