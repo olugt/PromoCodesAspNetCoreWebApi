@@ -8,10 +8,6 @@ namespace PromoCodesAspNetCoreWebApi.Application.SearchService
 {
     public class SearchServiceRequest: IRequest<SearchServiceResponse>
     {
-        /// <summary>
-        /// Snippet of service name.
-        /// </summary>
-        public string ServiceNameSnippet { get; set; }
-        public PaginationBinderModel Pagination { get; set; }
+        public SearchServiceBinderModel BinderModel { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus
     {
         public ActivateBonusRequestValidator()
         {
-            RuleFor(a => a.ServiceId)
+            RuleFor(a => a.BinderModel.ServiceId)
                 .NotEmpty()
                 .WithMessage("Identify the service about which bonus is to be activated for the user.");
         }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PromoCodesAspNetCoreWebApi.Application.ActivateBonus;
 using PromoCodesAspNetCoreWebApi.Application.Common.Models;
 using PromoCodesAspNetCoreWebApi.Application.GetServices;
+using PromoCodesAspNetCoreWebApi.Application.SearchService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,20 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.Controllers
     [ApiController]
     public class ServicesController : BaseController
     {
+        /// <summary>
+        /// Search for a service with a service name snippet.
+        /// </summary>
+        /// <param name="binderModel">Information about the service.</param>
+        /// <returns>All matched services are returned.</returns>
+        [MapToApiVersion("1.0")]
+        [HttpGet("search")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ServiceModel>))]
+        public async Task<List<ServiceModel>> Search(SearchServiceBinderModel binderModel)
+        {
+            var response = await Mediator.Send(new SearchServiceRequest { BinderModel = binderModel });
+            return response.Services;
+        }
+
         /// <summary>
         /// Get list of services, and can be paged.
         /// </summary>
