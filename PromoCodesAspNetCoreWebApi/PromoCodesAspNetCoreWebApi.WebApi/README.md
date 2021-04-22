@@ -1,4 +1,4 @@
-﻿To run this project/solution locally, the "PromoCodesAspNetCoreWebApi.WebApi" web API project should made the startup project.
+﻿To run this project/solution locally, the "PromoCodesAspNetCoreWebApi.WebApi" web API project should made the startup project. IIS Express should be chosen to run the project, for ease, even though the project has a Dockerfile (which has not been edited).
 
 Already, I used localdb for the database and the connection string in the appsettings.json file.
 
