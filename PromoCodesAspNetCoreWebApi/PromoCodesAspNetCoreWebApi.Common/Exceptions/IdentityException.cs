@@ -16,6 +16,11 @@ namespace PromoCodesAspNetCoreWebApi.Common.Exceptions
 
         }
 
+        public IdentityException(string message) : base(defaultMessage + " " + message)
+        {
+
+        }
+
         public IdentityException(Exception exception) : base(defaultMessage, exception)
         {
 

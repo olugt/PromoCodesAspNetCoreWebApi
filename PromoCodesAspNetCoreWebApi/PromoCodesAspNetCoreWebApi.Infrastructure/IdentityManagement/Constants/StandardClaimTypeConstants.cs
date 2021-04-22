@@ -4,8 +4,8 @@ using System.Text;
 
 namespace PromoCodesAspNetCoreWebApi.Infrastructure.IdentityManagement.Constants
 {
-    public class CustomClaimTypesConstants
+    public class StandardClaimTypeConstants
     {
-        public const string EmailAddress = nameof(EmailAddress) + "12345";
+        public const string Aud = "aud";
     }
 }

@@ -25,7 +25,7 @@ namespace PromoCodesAspNetCoreWebApi.Infrastructure.IdentityManagement
         public Task<JwtDetail> GenerateJwtDetails(IEnumerable<Claim> claims)
         {
             // This adds claims to represent account for multiple audiences. It is expected that the consumer of the JWT should check the audience.
-            var jwtClaims = claims.Concat(jwtDetailOptions.Audiences.Select(a => new Claim(StandardClaimTypesConstants.Aud, a)));
+            var jwtClaims = claims.Concat(jwtDetailOptions.Audiences.Select(a => new Claim(StandardClaimTypeConstants.Aud, a)));
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtDetailOptions.SecurityKey));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
