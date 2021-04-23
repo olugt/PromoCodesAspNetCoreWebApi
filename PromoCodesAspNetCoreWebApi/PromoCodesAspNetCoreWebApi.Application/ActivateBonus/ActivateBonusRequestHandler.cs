@@ -46,7 +46,8 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus
 
             var serviceId = request.BinderModel.ServiceId;
 
-            var bonus = bonusRepo.Query().Where(a => a.UserId == user.UserId && a.ServiceId == serviceId).SingleOrDefault();
+            //var bonus = bonusRepo.Query().Where(a => a.UserId == user.UserId && a.ServiceId == serviceId).SingleOrDefault();
+            var bonus = bonusRepo.ExtendedQuery(nameof(Service)).Where(a => a.UserId == user.UserId && a.ServiceId == serviceId).SingleOrDefault();
 
             if (bonus == null)
                 throw new NotFoundException("The user is not subscribed to the service.");

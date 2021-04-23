@@ -27,8 +27,8 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.Controllers
         /// <returns>List of matched services.</returns>
         [MapToApiVersion("1.0")]
         [HttpGet("search")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ServiceModel>))]
-        public async Task<List<ServiceModel>> Search([FromQuery] string nameSnippet, [FromQuery] int page, [FromQuery] int limit)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ServiceModel>/*List<ServiceModel>*/))]
+        public async Task<IEnumerable<ServiceModel>/*List<ServiceModel>*/> Search([FromQuery] string nameSnippet, [FromQuery] int page, [FromQuery] int limit)
         {
             var response = await Mediator.Send(new SearchServiceRequest
             {
@@ -46,8 +46,8 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.Controllers
         /// <returns>List of services, as determined by pagination.</returns>
         [MapToApiVersion("1.0")]
         [HttpGet("")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ServiceModel>))]
-        public async Task<List<ServiceModel>> Get([FromQuery] int page, [FromQuery] int limit)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ServiceModel>/*List<ServiceModel>*//*List<ServiceModel>*/))]
+        public async Task<IEnumerable<ServiceModel>/*List<ServiceModel>*/> Get([FromQuery] int page, [FromQuery] int limit)
         {
             var response = await Mediator.Send(new GetServicesRequest { Pagination = new PaginationModel(page, limit) });
             return response.Services;

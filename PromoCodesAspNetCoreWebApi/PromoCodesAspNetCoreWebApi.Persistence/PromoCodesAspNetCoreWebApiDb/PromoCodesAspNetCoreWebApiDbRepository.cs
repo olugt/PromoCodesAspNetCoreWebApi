@@ -3,6 +3,7 @@ using PromoCodesAspNetCoreWebApi.Application.Common.Interfaces.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,6 +46,11 @@ namespace PromoCodesAspNetCoreWebApi.Persistence.PromoCodesAspNetCoreWebApiDb
         public IQueryable<TEntity> Query()
         {
             return dbContext.Set<TEntity>().AsQueryable();
+        }
+
+        public IQueryable<TEntity> ExtendedQuery(string signature)
+        {
+            return dbContext.Set<TEntity>().Include(signature).AsQueryable();
         }
 
         public ICollection<TEntity> ReadAll()

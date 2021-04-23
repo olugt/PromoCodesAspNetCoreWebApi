@@ -69,7 +69,8 @@ namespace PromoCodesAspNetCoreWebApi.Application.GetServices.Tests
 
             //
 
-            Assert.AreEqual(2, getServicesResponse.Services.Count);
+            //Assert.AreEqual(2, getServicesResponse.Services.Count);
+            Assert.AreEqual(2, getServicesResponse.Services.Count());
         }
     }
 }

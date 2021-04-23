@@ -13,8 +13,8 @@ namespace PromoCodesAspNetCoreWebApi.Common.Exceptions
         {
         }
 
-        public NotFoundException(string dataName)
-            : base($"\"{dataName}\" data not found.")
+        public NotFoundException(string message)
+            : base(message)
         {
         }
 

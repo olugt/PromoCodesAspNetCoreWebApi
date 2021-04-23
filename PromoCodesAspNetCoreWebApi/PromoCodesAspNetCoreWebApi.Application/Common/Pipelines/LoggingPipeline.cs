@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,11 +17,12 @@ namespace PromoCodesAspNetCoreWebApi.Application.Common.Pipelines
     /// <typeparam name="TResponse">The response.</typeparam>
     class LoggingPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     {
-        private readonly ILogger<LoggingPipeline<TRequest, TResponse>> _logger;
+        private readonly ILogger<LoggingPipeline<TRequest, TResponse>> logger;
+
 
         public LoggingPipeline(ILogger<LoggingPipeline<TRequest, TResponse>> logger)
         {
-            _logger = logger;
+            this.logger = logger;
         }
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
@@ -28,7 +30,7 @@ namespace PromoCodesAspNetCoreWebApi.Application.Common.Pipelines
             var guid = Guid.NewGuid();
 
             var requestName = $"{request.GetType().Name}_{guid}";
-            _logger.LogInformation($"Handling request: {requestName}");
+            logger.LogInformation($"Handling request: {requestName}");
 
             var responseName = $"{typeof(TResponse).Name}_{guid}";
             TResponse response;
@@ -39,14 +41,14 @@ namespace PromoCodesAspNetCoreWebApi.Application.Common.Pipelines
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"\nRequest: {requestName} \nResponse: {responseName} \nException: \n{JsonSerializer.Serialize(ex)}", null);
-
+                logger.LogError(ex, $"\nRequest: {requestName} \nResponse: {responseName} \nException: \n{JsonConvert.SerializeObject(ex)/*JsonSerializer.Serialize(ex)*/}", null);
+                
                 throw ex;
             }
             finally
             {
-                _logger.LogInformation($"Handled request: {requestName}");
-                _logger.LogInformation($"Handled response: {responseName}");
+                logger.LogInformation($"Handled request: {requestName}");
+                logger.LogInformation($"Handled response: {responseName}");
             }
 
             return response;

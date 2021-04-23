@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using PromoCodesAspNetCoreWebApi.Application.Common.Models;
 using PromoCodesAspNetCoreWebApi.Common.Exceptions;
 using PromoCodesAspNetCoreWebApi.Common.Extensions;
@@ -14,21 +16,25 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.Middleware
 {
     public class ExceptionTransformerMiddleware
     {
-        private readonly RequestDelegate _next;
+        private readonly RequestDelegate next;
+        private readonly ILogger<ExceptionTransformerMiddleware> logger;
 
-        public ExceptionTransformerMiddleware(RequestDelegate next)
+        public ExceptionTransformerMiddleware(RequestDelegate next, ILogger<ExceptionTransformerMiddleware> logger)
         {
-            _next = next;
+            this.next = next;
+            this.logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext context)
         {
             try
             {
-                await _next(context);
+                await next(context);
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Exception caught in exception transformer middeleware: {ex.Message}", null);
+
                 await HandleAsync(context, ex);
             }
         }
@@ -47,7 +53,7 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.Middleware
 
             context.Response.StatusCode = (int)statusCode;
             context.Response.ContentType = "application/json";
-            await context.Response.WriteAsync(JsonSerializer.Serialize(
+            await context.Response.WriteAsync(JsonConvert.SerializeObject/*JsonSerializer.Serialize*/(
                 new ErrorModel
                 {
                     Message = statusCode == HttpStatusCode.InternalServerError ? "Operation failed." : ex.Message,

@@ -20,5 +20,6 @@ namespace PromoCodesAspNetCoreWebApi.Application.Common.Interfaces.Infrastructur
         int Delete(TEntity entity);
         Task<int> DeleteAsync(TEntity entity, CancellationToken cancellationToken);
         IQueryable<TEntity> Query();
+        IQueryable<TEntity> ExtendedQuery(string signature);
     }
 }
