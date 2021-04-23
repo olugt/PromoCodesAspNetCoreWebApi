@@ -8,5 +8,6 @@ namespace PromoCodesAspNetCoreWebApi.Domain.Entities
     {
         public int PromoCodeId { get; set; }
         public string Name { get; set; }
+        public decimal Amount { get; set; }
     }
 }

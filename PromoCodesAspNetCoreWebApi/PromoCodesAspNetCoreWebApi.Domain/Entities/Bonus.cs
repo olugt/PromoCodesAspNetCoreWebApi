@@ -15,5 +15,6 @@ namespace PromoCodesAspNetCoreWebApi.Domain.Entities
         public int? PromoCodeId { get; set; }
         public PromoCode PromoCode { get; set; }
         public bool? IsActivated { get; set; }
+        public DateTimeOffset? ActivationDateTimeOffset { get; set; }
     }
 }

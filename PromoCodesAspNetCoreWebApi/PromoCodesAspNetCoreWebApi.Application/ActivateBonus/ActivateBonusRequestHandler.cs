@@ -15,6 +15,9 @@ using System.Threading.Tasks;
 
 namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus
 {
+    /// <summary>
+    /// Handle creation of a new bonus, with respect to information from the user, service and the promo code used (if any).
+    /// </summary>
     public class ActivateBonusRequestHandler : IRequestHandler<ActivateBonusRequest, ActivateBonusResponse>
     {
         private readonly IMapper mapper;
@@ -22,19 +25,22 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus
         private readonly IRepository<Bonus> bonusRepo;
         private readonly IRepository<User> userRepo;
         private readonly IRepository<PromoCode> promoCodeRepo;
+        private readonly IRepository<Service> serviceRepo;
 
         public ActivateBonusRequestHandler(
             IMapper mapper,
             ICurrentUser currentUser,
             IRepository<Bonus> bonusRepo,
             IRepository<User> userRepo,
-            IRepository<PromoCode> promoCodeRepo)
+            IRepository<PromoCode> promoCodeRepo,
+            IRepository<Service> serviceRepo)
         {
             this.mapper = mapper;
             this.currentUser = currentUser;
             this.bonusRepo = bonusRepo;
             this.userRepo = userRepo;
             this.promoCodeRepo = promoCodeRepo;
+            this.serviceRepo = serviceRepo;
         }
 
         public async Task<ActivateBonusResponse> Handle(ActivateBonusRequest request, CancellationToken cancellationToken)
@@ -42,25 +48,27 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus
             if (!string.IsNullOrEmpty(request.BinderModel.PromoCode) && !promoCodeRepo.Query().Any(a => a.Name == request.BinderModel.PromoCode))
                 throw new NotFoundException("Promo code not found!");
 
+            var service = serviceRepo.ReadById(request.BinderModel.ServiceId);
+            if (service == null)
+                throw new NotFoundException("Service not found!");
+
             var user = UserLogic.GetUserByEmailAddress(currentUser.GetEmailAddress(), userRepo);
 
-            var serviceId = request.BinderModel.ServiceId;
+            var bonus = new Bonus();
 
-            //var bonus = bonusRepo.Query().Where(a => a.UserId == user.UserId && a.ServiceId == serviceId).SingleOrDefault();
-            var bonus = bonusRepo.ExtendedQuery(nameof(Service)).Where(a => a.UserId == user.UserId && a.ServiceId == serviceId).SingleOrDefault();
+            var promoCode = promoCodeRepo.Query().SingleOrDefault(a => a.Name == request.BinderModel.PromoCode);
 
-            if (bonus == null)
-                throw new NotFoundException("The user is not subscribed to the service.");
-
-            if (bonus is { IsActivated: true })
-                throw new InvalidOperationException("Bonus already activated for the user.");
-
+            bonus.PromoCodeId = promoCode?.PromoCodeId;
+            bonus.UserId = user.UserId;
+            bonus.ServiceId = service.ServiceId;
+            bonus.Amount = promoCode?.Amount;
             bonus.IsActivated = true;
-            bonus.PromoCodeId = promoCodeRepo.Query().SingleOrDefault(a => a.Name == request.BinderModel.PromoCode)?.PromoCodeId;
-            if (await bonusRepo.UpdateAsync(bonus, cancellationToken) != 1)
+            bonus.ActivationDateTimeOffset = DateTime.Now;
+            
+            if (await bonusRepo.CreateAsync(bonus, cancellationToken) != 1)
                 throw new NotFoundException("Bonus data could not be found.");
 
-            return new ActivateBonusResponse { Service = mapper.Map<ServiceModel>(bonus.Service) };
+            return new ActivateBonusResponse { Service = mapper.Map<ServiceModel>(service) };
         }
     }
 }

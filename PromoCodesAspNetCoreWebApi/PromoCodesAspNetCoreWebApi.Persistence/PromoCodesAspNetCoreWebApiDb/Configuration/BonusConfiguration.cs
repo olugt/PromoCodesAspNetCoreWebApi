@@ -11,8 +11,8 @@ namespace PromoCodesAspNetCoreWebApi.Persistence.PromoCodesAspNetCoreWebApiDb.Co
     {
         public void Configure(EntityTypeBuilder<Bonus> builder)
         {
-            builder.ToTable(nameof(Bonus)).HasIndex(a => new { a.UserId, a.ServiceId }).IsUnique();
-            builder.ToTable(nameof(Bonus)).Property(a => a.Amount).IsRequired();
+            //builder.ToTable(nameof(Bonus)).HasIndex(a => new { a.UserId, a.ServiceId }).IsUnique();
+            //builder.ToTable(nameof(Bonus)).Property(a => a.Amount).IsRequired();
             builder.ToTable(nameof(Bonus)).Property(a => a.UserId).IsRequired();
             builder.ToTable(nameof(Bonus)).Property(a => a.ServiceId).IsRequired();
 

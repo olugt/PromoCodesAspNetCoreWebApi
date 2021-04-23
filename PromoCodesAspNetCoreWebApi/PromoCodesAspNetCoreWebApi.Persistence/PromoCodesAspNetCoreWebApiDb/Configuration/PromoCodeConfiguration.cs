@@ -23,7 +23,8 @@ namespace PromoCodesAspNetCoreWebApi.Persistence.PromoCodesAspNetCoreWebApiDb.Co
                 new PromoCode
                 {
                     PromoCodeId = 2,
-                    Name = "promo-code-2"
+                    Name = "promo-code-2",
+                    Amount = 10.00M
                 },
                 new PromoCode
                 {
@@ -33,7 +34,8 @@ namespace PromoCodesAspNetCoreWebApi.Persistence.PromoCodesAspNetCoreWebApiDb.Co
                 new PromoCode
                 {
                     PromoCodeId = 4,
-                    Name = "promo-code-4"
+                    Name = "promo-code-4",
+                    Amount = 12.00M
                 },
                 new PromoCode
                 {
@@ -43,7 +45,8 @@ namespace PromoCodesAspNetCoreWebApi.Persistence.PromoCodesAspNetCoreWebApiDb.Co
                 new PromoCode
                 {
                     PromoCodeId = 6,
-                    Name = "promo-code-6"
+                    Name = "promo-code-6",
+                    Amount = 30.00M
                 });
         }
     }

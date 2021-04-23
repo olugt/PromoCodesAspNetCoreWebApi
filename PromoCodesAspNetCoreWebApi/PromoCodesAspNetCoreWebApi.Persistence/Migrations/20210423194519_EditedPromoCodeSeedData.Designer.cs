@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PromoCodesAspNetCoreWebApi.Persistence.PromoCodesAspNetCoreWebApiDb;
 
 namespace PromoCodesAspNetCoreWebApi.Persistence.Migrations
 {
     [DbContext(typeof(PromoCodesAspNetCoreWebApiDbContext))]
-    partial class PromoCodesAspNetCoreWebApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210423194519_EditedPromoCodeSeedData")]
+    partial class EditedPromoCodeSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

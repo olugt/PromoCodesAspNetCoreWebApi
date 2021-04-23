@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PromoCodesAspNetCoreWebApi.Persistence.PromoCodesAspNetCoreWebApiDb;
 
 namespace PromoCodesAspNetCoreWebApi.Persistence.Migrations
 {
     [DbContext(typeof(PromoCodesAspNetCoreWebApiDbContext))]
-    partial class PromoCodesAspNetCoreWebApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210423193212_FlexibilityAddedToBonusFeature")]
+    partial class FlexibilityAddedToBonusFeature
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,7 +120,7 @@ namespace PromoCodesAspNetCoreWebApi.Persistence.Migrations
                         new
                         {
                             PromoCodeId = 2,
-                            Amount = 10.00m,
+                            Amount = 0m,
                             Name = "promo-code-2"
                         },
                         new
@@ -130,7 +132,7 @@ namespace PromoCodesAspNetCoreWebApi.Persistence.Migrations
                         new
                         {
                             PromoCodeId = 4,
-                            Amount = 12.00m,
+                            Amount = 0m,
                             Name = "promo-code-4"
                         },
                         new
@@ -142,7 +144,7 @@ namespace PromoCodesAspNetCoreWebApi.Persistence.Migrations
                         new
                         {
                             PromoCodeId = 6,
-                            Amount = 30.00m,
+                            Amount = 0m,
                             Name = "promo-code-6"
                         });
                 });
