@@ -31,10 +31,10 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.ConfigurationManagement
 
         public SecurityKey GetSecurityKey()
         {
-            return new SymmetricSecurityKey(Convert.FromBase64String(GetJwtDetailOptions().SecurityKey)); ;
+            return new SymmetricSecurityKey(Convert.FromBase64String(GetJwtDetailOptions().SecurityKeyBase64)); ;
         }
 
-        public IEnumerable<SecurityKey> IssuerSigningKeyResolver(string token, SecurityToken securityToken, string kid, TokenValidationParameters validationParameters)
+        public IEnumerable<SecurityKey> GetIssuerSigningKeyResolver(string token, SecurityToken securityToken, string kid, TokenValidationParameters validationParameters)
         {
             return new List<SecurityKey>() { GetSecurityKey() };
         }

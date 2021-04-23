@@ -9,6 +9,6 @@ namespace PromoCodesAspNetCoreWebApi.Application.Common.Models.Infrastructure
         public string[] Audiences { get; set; }
         public string Issuer { get; set; }
         public int ExpiryDurationMinutes { get; set; }
-        public string SecurityKey { get; set; }
+        public string SecurityKeyBase64 { get; set; }
     }
 }

@@ -83,7 +83,7 @@ namespace PromoCodesAspNetCoreWebApi.WebApi
                         ValidIssuer = jwtManagementOptions.Issuer,
                         ValidAudiences = jwtManagementOptions.Audiences,
                         IssuerSigningKey = jwtConfigurationManager.GetSecurityKey(),
-                        IssuerSigningKeyResolver = new IssuerSigningKeyResolver(jwtConfigurationManager.IssuerSigningKeyResolver)
+                        IssuerSigningKeyResolver = new IssuerSigningKeyResolver(jwtConfigurationManager.GetIssuerSigningKeyResolver)
                     };
                 });
 
