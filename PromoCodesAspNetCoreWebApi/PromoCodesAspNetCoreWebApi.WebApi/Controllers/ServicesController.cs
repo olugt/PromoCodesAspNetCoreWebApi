@@ -61,9 +61,9 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.Controllers
         [MapToApiVersion("1.0")]
         [HttpPost("activate-bonus")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ServiceResponseModel))]
-        public async Task<ServiceResponseModel> ActivateBonus([FromBody] ActivateBonusRequestModel binderModel)
+        public async Task<ServiceResponseModel> ActivateBonus([FromBody] ActivateBonusRequestModel requestModel)
         {
-            var response = await Mediator.Send(new ActivateBonusRequest { RequestModel = binderModel });
+            var response = await Mediator.Send(new ActivateBonusRequest { RequestModel = requestModel });
             return response.ResponseModel;
         }
     }

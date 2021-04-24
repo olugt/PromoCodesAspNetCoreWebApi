@@ -31,18 +31,18 @@
             <param name="limit">Page items limit.</param>
             <returns>List of services, as determined by pagination.</returns>
         </member>
-        <member name="M:PromoCodesAspNetCoreWebApi.WebApi.Controllers.ServicesController.ActivateBonus(PromoCodesAspNetCoreWebApi.Application.Common.Models.ActivateBonusBinderModel)">
+        <member name="M:PromoCodesAspNetCoreWebApi.WebApi.Controllers.ServicesController.ActivateBonus(PromoCodesAspNetCoreWebApi.Application.Common.Models.ActivateBonusRequestModel)">
             <summary>
             Activate bonus for the identified service, for the current user.
             </summary>
             <param name="binderModel">Information about the service.</param>
             <returns>The service about which bonus was activated for the user.</returns>
         </member>
-        <member name="M:PromoCodesAspNetCoreWebApi.WebApi.Controllers.UserController.Login(PromoCodesAspNetCoreWebApi.Application.Common.Models.LoginBinderModel)">
+        <member name="M:PromoCodesAspNetCoreWebApi.WebApi.Controllers.UserController.Login(PromoCodesAspNetCoreWebApi.Application.Common.Models.LoginRequestModel)">
             <summary>
             Logs in a user with the email address and password provided.
             </summary>
-            <param name="binderModel">User credentials.</param>
+            <param name="requestModel">User credentials.</param>
             <returns>Returns the JWT detail generated for the suer.</returns>
         </member>
         <member name="T:PromoCodesAspNetCoreWebApi.WebApi.ResponseProviders.ApiVersionExceptionResponseProvider">
