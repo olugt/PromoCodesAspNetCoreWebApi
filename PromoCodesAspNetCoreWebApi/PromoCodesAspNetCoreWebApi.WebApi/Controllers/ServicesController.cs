@@ -56,7 +56,7 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.Controllers
         /// <summary>
         /// Activate bonus for the identified service, for the current user.
         /// </summary>
-        /// <param name="binderModel">Information about the service.</param>
+        /// <param name="requestModel">Information about the service.</param>
         /// <returns>The service about which bonus was activated for the user.</returns>
         [MapToApiVersion("1.0")]
         [HttpPost("activate-bonus")]

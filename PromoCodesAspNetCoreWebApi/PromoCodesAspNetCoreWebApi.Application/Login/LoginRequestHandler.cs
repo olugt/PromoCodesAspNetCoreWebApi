@@ -1,7 +1,9 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using PromoCodesAspNetCoreWebApi.Application.Common.Constants;
 using PromoCodesAspNetCoreWebApi.Application.Common.Interfaces.Infrastructure;
 using PromoCodesAspNetCoreWebApi.Application.Common.Logic;
+using PromoCodesAspNetCoreWebApi.Application.Common.Models;
 using PromoCodesAspNetCoreWebApi.Common.Exceptions;
 using PromoCodesAspNetCoreWebApi.Domain.Entities;
 using System;
@@ -16,13 +18,16 @@ namespace PromoCodesAspNetCoreWebApi.Application.Login
 {
     public class LoginRequestHandler : IRequestHandler<LoginRequest, LoginResponse>
     {
+        private readonly IMapper mapper;
         private readonly IRepository<User> userRepo;
         private readonly IJwtManager jwtManager;
 
         public LoginRequestHandler(
+            IMapper mapper,
             IRepository<User> userRepo,
             IJwtManager jwtManager)
         {
+            this.mapper = mapper;
             this.userRepo = userRepo;
             this.jwtManager = jwtManager;
         }
@@ -37,7 +42,7 @@ namespace PromoCodesAspNetCoreWebApi.Application.Login
             if (user.PasswordHashToBase64 != CryptographyLogic.HashStringToSha256ToBase64(request.RequestModel.Password))
                 throw new IdentityException("Invalid credentials!");
 
-            return new LoginResponse { JwtDetail = await jwtManager.GenerateJwtDetails(new List<Claim>() { new Claim(CustomClaimTypeConstants.EmailAddress, user.EmailAddress) }) };
+            return new LoginResponse { ResponseModel = mapper.Map<JwtDetailResponseModel>(await jwtManager.GenerateJwtDetails(new List<Claim>() { new Claim(CustomClaimTypeConstants.EmailAddress, user.EmailAddress) })) };
         }
     }
 }

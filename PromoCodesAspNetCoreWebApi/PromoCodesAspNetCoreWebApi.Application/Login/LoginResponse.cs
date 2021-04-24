@@ -1,9 +1,9 @@
-﻿using PromoCodesAspNetCoreWebApi.Application.Common.Models.Infrastructure;
+﻿using PromoCodesAspNetCoreWebApi.Application.Common.Models;
 
 namespace PromoCodesAspNetCoreWebApi.Application.Login
 {
     public class LoginResponse
     {
-        public JwtDetail JwtDetail { get; set; }
+        public JwtDetailResponseModel ResponseModel { get; set; }
     }
 }

@@ -40,11 +40,13 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus.Tests
         {
             var services = new List<Service>()
             {
-                new Service {
+                new Service
+                {
                     ServiceId = serviceId1,
                     Name = "some-service-1",
                 },
-                new Service {
+                new Service
+                {
                     ServiceId = serviceId2,
                     Name = "some-service-2",
                 }
@@ -52,7 +54,8 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus.Tests
 
             var bonuses = new List<Bonus>()
             {
-                new Bonus {
+                new Bonus
+                {
                     IsActivated = false,
                     UserId = userId1,
                     User = new User
@@ -63,7 +66,8 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus.Tests
                     ServiceId = serviceId1,
                     Service = services.Single(a => a.ServiceId == serviceId1)
                 },
-                new Bonus {
+                new Bonus
+                {
                     IsActivated = false,
                     UserId = userId2,
                     User = new User
@@ -78,11 +82,13 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus.Tests
 
             var users = new List<User>()
             {
-                new User {
+                new User
+                {
                     UserId = userId1,
                     EmailAddress = userEmailAddress1
                 },
-                new User {
+                new User
+                {
                     UserId = userId2,
                     EmailAddress = userEmailAddress2
                 }
@@ -90,12 +96,14 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus.Tests
 
             var promoCodes = new List<PromoCode>()
             {
-                new PromoCode {
+                new PromoCode
+                {
                     PromoCodeId = 1,
                     Name = promoCode1,
                     Amount = 2.00M
                 },
-                new PromoCode {
+                new PromoCode
+                {
                     PromoCodeId = 2,
                     Name = promoCode2,
                     Amount = 3.00M
@@ -105,7 +113,11 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus.Tests
             //
 
             mockMapper = new Mock<IMapper>();
-            mockMapper.Setup(a => a.Map<ServiceResponseModel>(It.IsAny<Service>())).Returns((Service b) => new ServiceResponseModel { Id = b.ServiceId, Name = b.Name });
+            mockMapper.Setup(a => a.Map<ServiceResponseModel>(It.IsAny<Service>())).Returns((Service b) => new ServiceResponseModel
+            {
+                Id = b.ServiceId,
+                Name = b.Name
+            });
 
             mockServiceRepo = new Mock<IRepository<Service>>();
             mockServiceRepo.Setup(a => a.Query()).Returns(services.AsQueryable());
