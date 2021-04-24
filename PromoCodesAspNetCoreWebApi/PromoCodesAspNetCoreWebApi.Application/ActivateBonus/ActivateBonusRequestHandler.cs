@@ -45,10 +45,10 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus
 
         public async Task<ActivateBonusResponse> Handle(ActivateBonusRequest request, CancellationToken cancellationToken)
         {
-            if (!string.IsNullOrEmpty(request.BinderModel.PromoCode) && !promoCodeRepo.Query().Any(a => a.Name == request.BinderModel.PromoCode))
+            if (!string.IsNullOrEmpty(request.RequestModel.PromoCode) && !promoCodeRepo.Query().Any(a => a.Name == request.RequestModel.PromoCode))
                 throw new NotFoundException("Promo code not found!");
 
-            var service = serviceRepo.ReadById(request.BinderModel.ServiceId);
+            var service = serviceRepo.ReadById(request.RequestModel.ServiceId);
             if (service == null)
                 throw new NotFoundException("Service not found!");
 
@@ -56,7 +56,7 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus
 
             var bonus = new Bonus();
 
-            var promoCode = promoCodeRepo.Query().SingleOrDefault(a => a.Name == request.BinderModel.PromoCode);
+            var promoCode = promoCodeRepo.Query().SingleOrDefault(a => a.Name == request.RequestModel.PromoCode);
 
             bonus.PromoCodeId = promoCode?.PromoCodeId;
             bonus.UserId = user.UserId;
@@ -68,7 +68,7 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus
             if (await bonusRepo.CreateAsync(bonus, cancellationToken) != 1)
                 throw new NotFoundException("Bonus data could not be found.");
 
-            return new ActivateBonusResponse { Service = mapper.Map<ServiceModel>(service) };
+            return new ActivateBonusResponse { ResponseModel = mapper.Map<ServiceResponseModel>(service) };
         }
     }
 }

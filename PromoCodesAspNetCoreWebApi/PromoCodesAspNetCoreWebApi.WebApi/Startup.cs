@@ -53,15 +53,25 @@ namespace PromoCodesAspNetCoreWebApi.WebApi
             services.AddPersistence(Configuration);
             services.AddApplication(Configuration);
 
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(corsPolicyBuilder =>
+                {
+                    corsPolicyBuilder.WithOrigins(Configuration.GetSection("CorsOrigins").Get<string[]>())
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
+
             services.AddControllers()
                 .ConfigureApiBehaviorOptions(options =>
                 {
                     options.SuppressModelStateInvalidFilter = true;
                 });
-            services.AddApiVersioning(apiVersioningOptions =>
+            services.AddApiVersioning(options =>
             {
-                apiVersioningOptions.ReportApiVersions = true;
-                apiVersioningOptions.ErrorResponses = new ApiVersionExceptionResponseProvider();
+                options.ReportApiVersions = true;
+                options.ErrorResponses = new ApiVersionExceptionResponseProvider();
             });
             services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
 
@@ -137,6 +147,8 @@ namespace PromoCodesAspNetCoreWebApi.WebApi
             }
 
             app.UseExceptionTransformer();
+
+            app.UseCors();
 
             app.UseHttpsRedirection();
 

@@ -31,7 +31,7 @@ namespace PromoCodesAspNetCoreWebApi.Application.SearchService
             if (!services.Any())
                 throw new NotFoundException("No services match your search.");
 
-            return Task.FromResult(new SearchServiceResponse { Services = mapper.ProjectTo<ServiceModel>(services).AsEnumerable()/*.ToList()*/ });
+            return Task.FromResult(new SearchServiceResponse { ResponseModels = mapper.ProjectTo<ServiceResponseModel>(services).AsEnumerable() });
         }
     }
 }

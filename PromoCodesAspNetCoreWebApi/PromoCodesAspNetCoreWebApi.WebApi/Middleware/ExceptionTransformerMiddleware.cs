@@ -54,7 +54,7 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.Middleware
             context.Response.StatusCode = (int)statusCode;
             context.Response.ContentType = "application/json";
             await context.Response.WriteAsync(JsonConvert.SerializeObject/*JsonSerializer.Serialize*/(
-                new ErrorModel
+                new ErrorResponseModel
                 {
                     Message = statusCode == HttpStatusCode.InternalServerError ? "Operation failed." : ex.Message,
                     Data = data

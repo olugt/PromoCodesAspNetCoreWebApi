@@ -29,12 +29,12 @@ namespace PromoCodesAspNetCoreWebApi.Application.Login
 
         public async Task<LoginResponse> Handle(LoginRequest request, CancellationToken cancellationToken)
         {
-            var user = userRepo.Query().Where(a => a.EmailAddress == request.BinderModel.EmailAddress).SingleOrDefault();
+            var user = userRepo.Query().Where(a => a.EmailAddress == request.RequestModel.EmailAddress).SingleOrDefault();
 
             if (user == null)
                 throw new NotFoundException("User not found.");
 
-            if (user.PasswordHashToBase64 != CryptographyLogic.HashStringToSha256ToBase64(request.BinderModel.Password))
+            if (user.PasswordHashToBase64 != CryptographyLogic.HashStringToSha256ToBase64(request.RequestModel.Password))
                 throw new IdentityException("Invalid credentials!");
 
             return new LoginResponse { JwtDetail = await jwtManager.GenerateJwtDetails(new List<Claim>() { new Claim(CustomClaimTypeConstants.EmailAddress, user.EmailAddress) }) };

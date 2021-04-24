@@ -105,7 +105,7 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus.Tests
             //
 
             mockMapper = new Mock<IMapper>();
-            mockMapper.Setup(a => a.Map<ServiceModel>(It.IsAny<Service>())).Returns((Service b) => new ServiceModel { Id = b.ServiceId, Name = b.Name });
+            mockMapper.Setup(a => a.Map<ServiceResponseModel>(It.IsAny<Service>())).Returns((Service b) => new ServiceResponseModel { Id = b.ServiceId, Name = b.Name });
 
             mockServiceRepo = new Mock<IRepository<Service>>();
             mockServiceRepo.Setup(a => a.Query()).Returns(services.AsQueryable());
@@ -136,7 +136,7 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus.Tests
         [DataRow(serviceId2, userEmailAddress2, null)]
         public async Task HandleTest(int serviceId, string userEmailAddress, string promoCode)
         {
-            var request = new ActivateBonusRequest { BinderModel = new ActivateBonusBinderModel { ServiceId = serviceId, PromoCode = promoCode } };
+            var request = new ActivateBonusRequest { RequestModel = new ActivateBonusRequestModel { ServiceId = serviceId, PromoCode = promoCode } };
             var cancellationToken = CancellationToken.None;
             var mockCurrentUser = new Mock<ICurrentUser>();
             mockCurrentUser.Setup(a => a.GetEmailAddress()).Returns(userEmailAddress);
@@ -147,14 +147,14 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus.Tests
 
             //
 
-            Assert.AreEqual(serviceId, activateBonusResponse.Service.Id);
+            Assert.AreEqual(serviceId, activateBonusResponse.ResponseModel.Id);
         }
 
         [DataTestMethod()]
         [DataRow(serviceId1, userEmailAddress1, "wrong-promo-code")]
         public void Handle_WithWrongPromoCode_Test(int serviceId, string userEmailAddress, string promoCode)
         {
-            var request = new ActivateBonusRequest { BinderModel = new ActivateBonusBinderModel { ServiceId = serviceId, PromoCode = promoCode } };
+            var request = new ActivateBonusRequest { RequestModel = new ActivateBonusRequestModel { ServiceId = serviceId, PromoCode = promoCode } };
             var cancellationToken = CancellationToken.None;
             var mockCurrentUser = new Mock<ICurrentUser>();
             mockCurrentUser.Setup(a => a.GetEmailAddress()).Returns(userEmailAddress);

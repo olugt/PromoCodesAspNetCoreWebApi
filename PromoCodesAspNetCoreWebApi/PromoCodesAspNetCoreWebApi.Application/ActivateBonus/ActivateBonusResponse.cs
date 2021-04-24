@@ -4,6 +4,6 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus
 {
     public class ActivateBonusResponse
     {
-        public ServiceModel Service { get; set; }
+        public ServiceResponseModel ResponseModel { get; set; }
     }
 }

@@ -8,6 +8,6 @@ namespace PromoCodesAspNetCoreWebApi.Application.Login
 {
     public class LoginRequest : IRequest<LoginResponse>
     {
-        public LoginBinderModel BinderModel { get; set; }
+        public LoginRequestModel RequestModel { get; set; }
     }
 }

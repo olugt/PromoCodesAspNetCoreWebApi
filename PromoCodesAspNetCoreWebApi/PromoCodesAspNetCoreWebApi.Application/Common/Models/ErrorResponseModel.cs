@@ -4,9 +4,9 @@ using System.Text;
 
 namespace PromoCodesAspNetCoreWebApi.Application.Common.Models
 {
-    public class ActivateBonusBinderModel
+    public class ErrorResponseModel
     {
-        public int ServiceId { get; set; }
-        public string PromoCode { get; set; }
+        public string Message { get; set; }
+        public Dictionary<string, object> Data { get; set; }
     }
 }

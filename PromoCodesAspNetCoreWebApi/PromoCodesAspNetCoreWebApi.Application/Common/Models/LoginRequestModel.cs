@@ -4,9 +4,9 @@ using System.Text;
 
 namespace PromoCodesAspNetCoreWebApi.Application.Common.Models
 {
-    public class ErrorModel
+    public class LoginRequestModel
     {
-        public string Message { get; set; }
-        public Dictionary<string, object> Data { get; set; }
+        public string EmailAddress { get; set; }
+        public string Password { get; set; }
     }
 }

@@ -47,7 +47,7 @@ namespace PromoCodesAspNetCoreWebApi.Application.GetServices.Tests
             };
 
             //
-            var config = new MapperConfiguration(exp => exp.CreateMap<Service, ServiceModel>()
+            var config = new MapperConfiguration(exp => exp.CreateMap<Service, ServiceResponseModel>()
             .ForMember(a => a.Id, b => b.MapFrom(c => c.ServiceId))
             .ForMember(a => a.Name, b => b.MapFrom(c => c.Name)));
             mapper = new Mapper(config);
@@ -70,7 +70,7 @@ namespace PromoCodesAspNetCoreWebApi.Application.GetServices.Tests
             //
 
             //Assert.AreEqual(2, getServicesResponse.Services.Count);
-            Assert.AreEqual(2, getServicesResponse.Services.Count());
+            Assert.AreEqual(2, getServicesResponse.ResponseModels.Count());
         }
     }
 }

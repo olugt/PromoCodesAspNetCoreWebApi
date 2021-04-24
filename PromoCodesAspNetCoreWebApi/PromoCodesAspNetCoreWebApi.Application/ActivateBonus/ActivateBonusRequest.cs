@@ -8,6 +8,6 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus
 {
     public class ActivateBonusRequest: IRequest<ActivateBonusResponse>
     {
-        public ActivateBonusBinderModel BinderModel { get; set; }
+        public ActivateBonusRequestModel RequestModel { get; set; }
     }
 }

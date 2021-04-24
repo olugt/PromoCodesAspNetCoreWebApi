@@ -27,15 +27,15 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.Controllers
         /// <returns>List of matched services.</returns>
         [MapToApiVersion("1.0")]
         [HttpGet("search")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ServiceModel>/*List<ServiceModel>*/))]
-        public async Task<IEnumerable<ServiceModel>/*List<ServiceModel>*/> Search([FromQuery] string nameSnippet, [FromQuery] int page, [FromQuery] int limit)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ServiceResponseModel>))]
+        public async Task<IEnumerable<ServiceResponseModel>> Search([FromQuery] string nameSnippet, [FromQuery] int page, [FromQuery] int limit)
         {
             var response = await Mediator.Send(new SearchServiceRequest
             {
                 ServiceNameSnippet = nameSnippet,
                 Pagination = new PaginationModel(page, limit)
             });
-            return response.Services;
+            return response.ResponseModels;
         }
 
         /// <summary>
@@ -46,11 +46,11 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.Controllers
         /// <returns>List of services, as determined by pagination.</returns>
         [MapToApiVersion("1.0")]
         [HttpGet("")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ServiceModel>/*List<ServiceModel>*//*List<ServiceModel>*/))]
-        public async Task<IEnumerable<ServiceModel>/*List<ServiceModel>*/> Get([FromQuery] int page, [FromQuery] int limit)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ServiceResponseModel>))]
+        public async Task<IEnumerable<ServiceResponseModel>> Get([FromQuery] int page, [FromQuery] int limit)
         {
             var response = await Mediator.Send(new GetServicesRequest { Pagination = new PaginationModel(page, limit) });
-            return response.Services;
+            return response.ResponseModels;
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.Controllers
         /// <returns>The service about which bonus was activated for the user.</returns>
         [MapToApiVersion("1.0")]
         [HttpPost("activate-bonus")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ServiceModel))]
-        public async Task<ServiceModel> ActivateBonus([FromBody] ActivateBonusBinderModel binderModel)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ServiceResponseModel))]
+        public async Task<ServiceResponseModel> ActivateBonus([FromBody] ActivateBonusRequestModel binderModel)
         {
-            var response = await Mediator.Send(new ActivateBonusRequest { BinderModel = binderModel });
-            return response.Service;
+            var response = await Mediator.Send(new ActivateBonusRequest { RequestModel = binderModel });
+            return response.ResponseModel;
         }
     }
 }
