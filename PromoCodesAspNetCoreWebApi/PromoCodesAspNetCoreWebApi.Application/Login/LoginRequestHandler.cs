@@ -42,7 +42,14 @@ namespace PromoCodesAspNetCoreWebApi.Application.Login
             if (user.PasswordHashToBase64 != CryptographyLogic.HashStringToSha256ToBase64(request.RequestModel.Password))
                 throw new IdentityException("Invalid credentials!");
 
-            return new LoginResponse { ResponseModel = mapper.Map<JwtDetailResponseModel>(await jwtManager.GenerateJwtDetails(new List<Claim>() { new Claim(CustomClaimTypeConstants.EmailAddress, user.EmailAddress) })) };
+            var jwtDetail = await jwtManager.GenerateJwtDetails(new List<Claim>() { new Claim(CustomClaimTypeConstants.EmailAddress, user.EmailAddress) });
+            return new LoginResponse
+            {
+                ResponseModel = new JwtDetailResponseModel
+                {
+                   JwtDetail = jwtDetail
+                }
+            };
         }
     }
 }

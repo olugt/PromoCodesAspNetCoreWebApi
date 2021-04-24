@@ -9,12 +9,6 @@ namespace PromoCodesAspNetCoreWebApi.Application.Common.Models
 {
     public class JwtDetailResponseModel : IMapFrom<JwtDetail>
     {
-        public string Jwt { get; }
-        public DateTime ExpiryDatetimeUtc { get; }
-
-        public void Mapping(Profile profile)
-        {
-            profile.CreateMap<JwtDetail, JwtDetailResponseModel>();
-        }
+        public JwtDetail JwtDetail { get; set; }
     }
 }
