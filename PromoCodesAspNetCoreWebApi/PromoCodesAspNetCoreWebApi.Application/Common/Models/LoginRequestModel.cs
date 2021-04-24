@@ -8,6 +8,7 @@ namespace PromoCodesAspNetCoreWebApi.Application.Common.Models
     public class LoginRequestModel
     {
         [Required(ErrorMessage = "Email address is required.")]
+        [EmailAddress(ErrorMessage = "Email address is invalid.")]
         public string EmailAddress { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
