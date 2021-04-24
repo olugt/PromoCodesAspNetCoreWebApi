@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using PromoCodesAspNetCoreWebApi.Application.Common.Logic;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -41,7 +42,7 @@ namespace PromoCodesAspNetCoreWebApi.Application.Common.Pipelines
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, $"\nRequest: {requestName} \nResponse: {responseName} \nException: \n{JsonConvert.SerializeObject(ex)/*JsonSerializer.Serialize(ex)*/}", null);
+                logger.LogError(ex, $"\nRequest: {requestName} \nResponse: {responseName} \nException: \n{JsonConvert.SerializeObject(ex, NewtonsoftLogic.GetCammelCaseSettings())/*JsonSerializer.Serialize(ex)*/}", null);
                 
                 throw ex;
             }

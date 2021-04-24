@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using PromoCodesAspNetCoreWebApi.Application.Common.Logic;
 using PromoCodesAspNetCoreWebApi.Application.Common.Models;
 using PromoCodesAspNetCoreWebApi.Common.Exceptions;
 using PromoCodesAspNetCoreWebApi.Common.Extensions;
@@ -58,7 +59,7 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.Middleware
                 {
                     Message = statusCode == HttpStatusCode.InternalServerError ? "Operation failed." : ex.Message,
                     Data = data
-                }));
+                }, NewtonsoftLogic.GetCammelCaseSettings()));
         }
     }
 }
