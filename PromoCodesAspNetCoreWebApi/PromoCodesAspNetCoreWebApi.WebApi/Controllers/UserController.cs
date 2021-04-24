@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 namespace PromoCodesAspNetCoreWebApi.WebApi.Controllers
 {
     [Authorize]
+    [ApiVersion("1.0")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : BaseController
@@ -25,6 +26,7 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.Controllers
         [MapToApiVersion("1.0")]
         [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(JwtDetail))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorResponseModel))]
         public async Task<JwtDetail> Login([FromBody] LoginRequestModel requestModel)
         {
             var response = await Mediator.Send(new LoginRequest { RequestModel = requestModel });
