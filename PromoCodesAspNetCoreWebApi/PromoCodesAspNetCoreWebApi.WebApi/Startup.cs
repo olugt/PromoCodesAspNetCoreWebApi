@@ -16,6 +16,7 @@ using PromoCodesAspNetCoreWebApi.Application.Common.Models.Infrastructure;
 using PromoCodesAspNetCoreWebApi.Infrastructure;
 using PromoCodesAspNetCoreWebApi.Persistence;
 using PromoCodesAspNetCoreWebApi.WebApi.ConfigurationManagement;
+using PromoCodesAspNetCoreWebApi.WebApi.Extensions;
 using PromoCodesAspNetCoreWebApi.WebApi.Middleware.Extensions;
 using PromoCodesAspNetCoreWebApi.WebApi.ResponseProviders;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -66,7 +67,11 @@ namespace PromoCodesAspNetCoreWebApi.WebApi
             services.AddControllers()
                 .ConfigureApiBehaviorOptions(options =>
                 {
-                    options.SuppressModelStateInvalidFilter = true;
+                    //options.SuppressModelStateInvalidFilter = true;
+                    options.InvalidModelStateResponseFactory = (context) =>
+                    {
+                        throw context.ModelState.ToValidationException();
+                    };
                 });
             services.AddApiVersioning(options =>
             {

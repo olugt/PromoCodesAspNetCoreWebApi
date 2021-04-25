@@ -26,7 +26,8 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.Controllers
         [MapToApiVersion("1.0")]
         [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(JwtDetailResponseModel))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorResponseModel))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorResponseModel<object>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationErrorResponseModel))]
         public async Task<JwtDetailResponseModel> Login([FromBody] LoginRequestModel requestModel)
         {
             var response = await Mediator.Send(new LoginRequest { RequestModel = requestModel });

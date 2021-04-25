@@ -42,24 +42,42 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.Middleware
 
         private async Task HandleAsync(HttpContext context, Exception ex)
         {
-            var (statusCode, data) = ex switch
-            {
-                BadRequestException _ => (HttpStatusCode.BadRequest, ex.GetData()),
-                ValidationException _ => (HttpStatusCode.BadRequest, ex.GetData()),
-                NotFoundException _ => (HttpStatusCode.NotFound, ex.GetData()),
-                ApiVersionException _ => ((HttpStatusCode)ex.GetData()[ApiVersionException.StatusCode], ex.GetData()),
-                IdentityException _ => (HttpStatusCode.BadRequest, ex.GetData()),
-                _ => (HttpStatusCode.InternalServerError, null)
-            };
+            var responseStatusCode = HttpStatusCode.InternalServerError;
+            var responseText = string.Empty;
 
-            context.Response.StatusCode = (int)statusCode;
-            context.Response.ContentType = "application/json";
-            await context.Response.WriteAsync(JsonConvert.SerializeObject/*JsonSerializer.Serialize*/(
-                new ErrorResponseModel
+            if (ex is ValidationException valdEx)
+            {
+                responseStatusCode = HttpStatusCode.BadRequest;
+                responseText = JsonConvert.SerializeObject(
+                    new ValidationErrorResponseModel
+                    {
+                        Message = valdEx.Message,
+                        Data = valdEx.GetData()
+                    }, NewtonsoftLogic.GetCammelCaseSettings());
+            }
+            else
+            {
+                var (statusCode, data) = ex switch
+                {
+                    NotFoundException _ => (HttpStatusCode.NotFound, ex.GetData()),
+                    ApiVersionException _ => ((HttpStatusCode)ex.GetData()[ApiVersionException.StatusCode], ex.GetData()),
+                    IdentityException _ => (HttpStatusCode.Unauthorized, ex.GetData()),
+                    _ => (HttpStatusCode.InternalServerError, null)
+                };
+
+                responseStatusCode = statusCode;
+                responseText = JsonConvert.SerializeObject/*JsonSerializer.Serialize*/(
+                new ErrorResponseModel<object>
                 {
                     Message = statusCode == HttpStatusCode.InternalServerError ? "Operation failed." : ex.Message,
                     Data = data
-                }, NewtonsoftLogic.GetCammelCaseSettings()));
+                }, NewtonsoftLogic.GetCammelCaseSettings());
+            }
+
+            context.Response.StatusCode = (int)responseStatusCode;
+            context.Response.ContentType = "application/json";
+
+            await context.Response.WriteAsync(responseText);
         }
     }
 }

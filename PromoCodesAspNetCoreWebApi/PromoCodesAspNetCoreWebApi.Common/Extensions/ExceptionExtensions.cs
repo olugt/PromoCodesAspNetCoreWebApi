@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PromoCodesAspNetCoreWebApi.Common.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,14 @@ namespace PromoCodesAspNetCoreWebApi.Common.Extensions
                 return ex.Data.Keys.Cast<string>().ToDictionary(key => key, key => ex.Data[key]);
 
             return new Dictionary<string, object>();
+        }
+
+        public static Dictionary<string, string[]> GetData(this ValidationException valdEx)
+        {
+            if (valdEx.Data.Count > 0)
+                return valdEx.Data.Keys.Cast<string>().ToDictionary(key => key, key => (string[])valdEx.Data[key]);
+
+            return new Dictionary<string, string[]>();
         }
     }
 }

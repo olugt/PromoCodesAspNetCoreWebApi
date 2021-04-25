@@ -13,5 +13,10 @@ namespace PromoCodesAspNetCoreWebApi.Common.Exceptions
             : base("Validation error occurred.")
         {
         }
+
+        public ValidationException(string message)
+            : base(message)
+        {
+        }
     }
 }
