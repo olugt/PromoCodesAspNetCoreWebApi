@@ -14,7 +14,8 @@ namespace PromoCodesAspNetCoreWebApi.Persistence.PromoCodesAspNetCoreWebApiDb.Co
             builder.ToTable(nameof(PromoCode)).HasIndex(a => a.Name).IsUnique();
             builder.ToTable(nameof(PromoCode)).Property(a => a.Name).IsRequired();
 
-            builder.ToTable(nameof(PromoCode)).HasData(
+            var seedData = new PromoCode[]
+            {
                 new PromoCode
                 {
                     PromoCodeId = 1,
@@ -47,7 +48,9 @@ namespace PromoCodesAspNetCoreWebApi.Persistence.PromoCodesAspNetCoreWebApiDb.Co
                     PromoCodeId = 6,
                     Name = "promo-code-6",
                     Amount = 30.00M
-                });
+                }
+            };
+            builder.ToTable(nameof(PromoCode)).HasData(seedData);
         }
     }
 }

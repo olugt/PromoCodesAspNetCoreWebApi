@@ -46,11 +46,11 @@ namespace PromoCodesAspNetCoreWebApi.Application.ActivateBonus
         public async Task<ActivateBonusResponse> Handle(ActivateBonusRequest request, CancellationToken cancellationToken)
         {
             if (!string.IsNullOrEmpty(request.RequestModel.PromoCode) && !promoCodeRepo.Query().Any(a => a.Name == request.RequestModel.PromoCode))
-                throw new NotFoundException("Promo code not found!");
+                throw new NotFoundException("Promo code invalid.");
 
             var service = serviceRepo.ReadById(request.RequestModel.ServiceId);
             if (service == null)
-                throw new NotFoundException("Service not found!");
+                throw new NotFoundException("Service not found.");
 
             var user = UserLogic.GetUserByEmailAddress(currentUser.GetEmailAddress(), userRepo);
 

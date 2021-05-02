@@ -16,7 +16,8 @@ namespace PromoCodesAspNetCoreWebApi.Persistence.PromoCodesAspNetCoreWebApiDb.Co
             builder.ToTable(nameof(Bonus)).Property(a => a.UserId).IsRequired();
             builder.ToTable(nameof(Bonus)).Property(a => a.ServiceId).IsRequired();
 
-            builder.ToTable(nameof(Bonus)).HasData(
+            var seedData = new Bonus[]
+            {
                 new Bonus
                 {
                     BonusId = 1,
@@ -44,7 +45,9 @@ namespace PromoCodesAspNetCoreWebApi.Persistence.PromoCodesAspNetCoreWebApiDb.Co
                     Amount = 56.7M,
                     UserId = 1,
                     ServiceId = 10
-                });
+                }
+            };
+            builder.ToTable(nameof(Bonus)).HasData(seedData);
         }
     }
 }

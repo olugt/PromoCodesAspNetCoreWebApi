@@ -28,14 +28,14 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.Controllers
         [MapToApiVersion("1.0")]
         [HttpGet("search")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ServiceResponseModel>))]
-        public async Task<IEnumerable<ServiceResponseModel>> Search([FromQuery] string nameSnippet, [FromQuery] int page, [FromQuery] int limit)
+        public async Task<IActionResult> Search([FromQuery] string nameSnippet, [FromQuery] int page, [FromQuery] int limit)
         {
             var response = await Mediator.Send(new SearchServiceRequest
             {
                 ServiceNameSnippet = nameSnippet,
                 Pagination = new PaginationModel(page, limit)
             });
-            return response.ResponseModels;
+            return Ok(response.ResponseModels);
         }
 
         /// <summary>
@@ -47,10 +47,10 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.Controllers
         [MapToApiVersion("1.0")]
         [HttpGet("")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ServiceResponseModel>))]
-        public async Task<IEnumerable<ServiceResponseModel>> Get([FromQuery] int page, [FromQuery] int limit)
+        public async Task<IActionResult> Get([FromQuery] int page, [FromQuery] int limit)
         {
             var response = await Mediator.Send(new GetServicesRequest { Pagination = new PaginationModel(page, limit) });
-            return response.ResponseModels;
+            return Ok(response.ResponseModels);
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace PromoCodesAspNetCoreWebApi.WebApi.Controllers
         /// <returns>The service about which bonus was activated for the user.</returns>
         [MapToApiVersion("1.0")]
         [HttpPost("activate-bonus")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ServiceResponseModel))]
-        public async Task<ServiceResponseModel> ActivateBonus([FromBody] ActivateBonusRequestModel requestModel)
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ServiceResponseModel))]
+        public async Task<IActionResult> ActivateBonus([FromBody] ActivateBonusRequestModel requestModel)
         {
             var response = await Mediator.Send(new ActivateBonusRequest { RequestModel = requestModel });
-            return response.ResponseModel;
+            return CreatedAtAction(null, response.ResponseModel);
         }
     }
 }

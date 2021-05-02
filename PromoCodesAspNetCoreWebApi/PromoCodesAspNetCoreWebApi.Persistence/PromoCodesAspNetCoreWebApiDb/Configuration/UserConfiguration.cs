@@ -16,7 +16,8 @@ namespace PromoCodesAspNetCoreWebApi.Persistence.PromoCodesAspNetCoreWebApiDb.Co
             builder.ToTable(nameof(User)).Property(a => a.EmailAddress).IsRequired();
             builder.ToTable(nameof(User)).Property(a => a.PasswordHashToBase64).IsRequired();
 
-            builder.ToTable(nameof(User)).HasData(
+            var seedData = new User[]
+            {
                 new User
                 {
                     UserId = 1,
@@ -34,7 +35,9 @@ namespace PromoCodesAspNetCoreWebApi.Persistence.PromoCodesAspNetCoreWebApiDb.Co
                     UserId = 3,
                     EmailAddress = "user3@example.com",
                     PasswordHashToBase64 = CryptographyLogic.HashStringToSha256ToBase64("password789.GHI")
-                });
+                }
+            };
+            builder.ToTable(nameof(User)).HasData(seedData);
         }
     }
 }

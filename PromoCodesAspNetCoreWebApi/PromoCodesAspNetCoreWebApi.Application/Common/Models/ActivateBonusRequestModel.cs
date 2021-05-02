@@ -9,6 +9,7 @@ namespace PromoCodesAspNetCoreWebApi.Application.Common.Models
     {
         [Required(ErrorMessage = "Identify the service about which bonus is to be activated for the user.")]
         public int? ServiceId { get; set; }
+        [Required(ErrorMessage = "Valid promo code is required.")]
         public string PromoCode { get; set; }
     }
 }
