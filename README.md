@@ -1,5 +1,5 @@
 # PromoCodesAspNetCoreWebApi
-An ASP.NET Core Web API for managing promo codes.
+An ASP.NET Core Web API project for managing promo codes.
 
 ## How-to:
 
@@ -17,4 +17,4 @@ Also, the security key used to generate the JWT for this project is in the appse
 
 I configured the SwaggerUI for use with Authorization header too, for JWT Bearer token.
 
-Noeworthily, the Bonus entity contains bonuses already assigned to a user with respect to a service (for example, by the system and can be in a predeterminate state where a user is yet to activate the bonus). And the bonus has an associated monetary ammount. Also, the bonus has an optionally associated promo code. So, PromoCode is a different entity that can optionally be used with a bonus. For example, a user can enter a promo code to both get enlisted for a bonus and get the bonus activated in the same process. A promo code has an optionally associated monetary amount, such that when the promo code is used to realize a bonus, the monetary amount is saved with the bonus where applicable. Also, a user can have more than 1 bonus for the same service. All these are in order for there to be flexibility to build on, for the "bonus" feature.
+Noteworthily, the Bonus entity contains bonuses already assigned to a user with respect to a service (for example, by the system and can be in a predeterminate state where a user is yet to activate the bonus). And the bonus has an associated monetary ammount. Also, the bonus has an optionally associated promo code. So, PromoCode is a different entity that can optionally be used with a bonus. For example, a user can enter a promo code to both get enlisted for a bonus and get the bonus activated in the same process. A promo code has an optionally associated monetary amount, such that when the promo code is used to realize a bonus, the monetary amount is saved with the bonus where applicable. Also, a user can have more than 1 bonus for the same service. All these are in order for there to be flexibility to build on, for the "bonus" feature.
